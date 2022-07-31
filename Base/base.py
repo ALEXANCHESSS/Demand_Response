@@ -228,12 +228,12 @@ class WebPage(object):
             return log["params"]
 
 
-#D17F21A9C242E1EDDA1FB7EB86AECDA1
-    def get_body_response(self):
-
-        logs = self._web_driver.get_log('performance')
-        responses = [self.processLog(log) for log in logs]
-        return responses
-
-
+# #D17F21A9C242E1EDDA1FB7EB86AECDA1
+#     def get_body_response(self):
+#
+#         logs = self._web_driver.get_log('performance')
+#         responses = [self.processLog(log) for log in logs]
+#         return responses
+#
+#
 
