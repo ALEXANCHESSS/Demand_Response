@@ -6,7 +6,7 @@
 
 import pytest
 import uuid
-from selenium import webdriver
+from seleniumwire import webdriver
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 from Config.config import TestData

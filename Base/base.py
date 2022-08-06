@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 
 import pychrome
 from selenium.common import exceptions
+from seleniumwire.utils import decode
 from termcolor import colored
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -235,5 +236,13 @@ class WebPage(object):
 #         responses = [self.processLog(log) for log in logs]
 #         return responses
 #
-#
-
+    def get_body_response(self):
+        for request in self._web_driver.requests:
+            if request.response:
+                body = decode(request.response.body, request.response.headers.get('Content-Encoding', 'identity'))
+                print(body
+                    # request.url,
+                    # # request.response.status_code,
+                    # # request.response.headers['Content-Type'],
+                    # request.response.body
+                )
