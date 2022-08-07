@@ -1,8 +1,4 @@
-#!/usr/bin/python3
-# -*- encoding=utf8 -*-
 
-# This is example shows how we can manage failed tests
-# and make screenshots after any failed test case.
 
 import pytest
 import uuid
@@ -18,7 +14,7 @@ def chrome_options():
     options = Options()
     # options.binary_location = '/usr/bin/chromium'
     # options.binary_location = '/usr/bin/google-chrome-stable'
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
     # options.add_argument('--no-sandbox')
     # options.add_argument('--log-level=DEBUG')
     return options

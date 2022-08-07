@@ -11,7 +11,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class WebPage(object):
-
     _web_driver = None
 
     def __init__(self, web_driver, url=''):
@@ -194,15 +193,29 @@ class WebPage(object):
         # Go up:
         self._web_driver.execute_script('window.scrollTo(document.body.scrollHeight, 0);')
 
+    def get_body_response(self, url, *index):
+        """Gets the response body:
 
-#
-    def get_body_response(self, url):
+    1) "url" is the url of the request from which you need to pick up the response body
+    2) "index" - a list of keys with which you can get the value from the json response body
+
+    At the output, the function gives the value of the parameter response from json"""
+
         for request in self._web_driver.requests:
             if request.url == url:
                 body_b = decode(request.response.body, request.response.headers.get('Content-Encoding', 'identity'))
                 body_str = body_b.decode('UTF-8')
                 body_dict = json.loads(body_str)
-
-                return body_dict
-            else: f"Request with url {url} does not exist"
-
+                if len(index) == 1:
+                    body_value = body_dict[index[0]]
+                    return body_value
+                elif len(index) == 2:
+                    body_value = body_dict[index[0]][index[1]]
+                    return body_value
+                elif len(index) == 3:
+                    body_value = body_dict[index[0]][index[1]][index[2]]
+                    return body_value
+                else:
+                    return "Index not set to search for value in response json"
+        else:
+            return f"Request with url {url} does not exist"
