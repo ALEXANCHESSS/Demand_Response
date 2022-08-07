@@ -18,7 +18,7 @@ of the page in case any test case will fail.
 
 [pages/elements.py](Base/elements.py) contains helper class to define web elements on web pages.
 
-[tests/test_smoke_yandex_market.py](tests/test_smoke_yandex_market.py) contains several smoke Web UI tests for YandexMarket (https://market.yandex.ru/)
+
 
 
 How To Run Tests

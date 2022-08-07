@@ -9,19 +9,18 @@ import uuid
 from seleniumwire import webdriver
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
-from Config.config import TestData
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 @pytest.fixture
 def chrome_options():
     options = Options()
-    options.add_argument("--remote-debugging-port=8000")
     # options.binary_location = '/usr/bin/chromium'
     # options.binary_location = '/usr/bin/google-chrome-stable'
     # options.add_argument('--headless')
     # options.add_argument('--no-sandbox')
     # options.add_argument('--log-level=DEBUG')
-
     return options
 
 
@@ -40,8 +39,8 @@ def pytest_runtest_makereport(item, call):
 def web_browser(request, chrome_options):
     capabilities = DesiredCapabilities.CHROME
     capabilities["goog:loggingPrefs"] = {"performance": "ALL"}
-    browser = webdriver.Chrome(chrome_options=chrome_options, executable_path=TestData.DIRECTORY_DRIVER,
-                               desired_capabilities=capabilities)
+    browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),
+                               chrome_options=chrome_options, desired_capabilities=capabilities)
     browser.set_window_size(1400, 1000)
     # browser.get(path)
 

@@ -1,7 +1,7 @@
-pytest~=7.1.1
-pytest-selenium
-termcolor~=1.1.0
+pytest
+termcolor
 allure-python-commons
-
-selenium~=4.1.3
-pytest-html~=3.1.1
+webdriver-manager
+selenium
+pytest-html
+selenium-wire

@@ -3,9 +3,6 @@
 import json
 import time
 from urllib.parse import urlparse
-
-import pychrome
-from selenium.common import exceptions
 from seleniumwire.utils import decode
 from termcolor import colored
 from selenium.webdriver.common.by import By
@@ -197,52 +194,15 @@ class WebPage(object):
         # Go up:
         self._web_driver.execute_script('window.scrollTo(document.body.scrollHeight, 0);')
 
-    # def get_body_response(self):
-    #     """Getting a response"""
-    #
-    #     try:
-    #         body = self._web_driver.execute_cdp_cmd('Network.getResponseBody', {})['body']
-    #     except exceptions.WebDriverException:
-    #         print('response.body is null')
 
-    def responce_received(**kwargs):
-        par = print("loading: ", kwargs)
-        return par
-
-
-    # def get_body_response(self):
-    #     """Getting a response"""
-    #     dev_tools = pychrome.Browser(url="http://localhost:8000")
-    #     tab = dev_tools.list_tab()[0]
-    #     tab.start()
-    #     tab.call_method("Network.enable", _timeout=20)
-    #     # tab.set_listener("Network.requestWillBeSent")
-    #     body_responce = tab.set_listener("Network.responseReceived")
-    #     print(f"body_responce:{body_responce}")
-    #     return body_responce
-
-    def processLog(self, log):
-        log = json.loads(log["message"])["message"]
-        if ("Network.responseReceived" in log["method"] and "params" in log.keys()):
-            body = self._web_driver.execute_cdp_cmd('Network.getResponseBody', {'requestId': log["params"]["requestId"]})
-            print(json.dumps(body, indent=4, sort_keys=True))
-            return log["params"]
-
-
-# #D17F21A9C242E1EDDA1FB7EB86AECDA1
-#     def get_body_response(self):
 #
-#         logs = self._web_driver.get_log('performance')
-#         responses = [self.processLog(log) for log in logs]
-#         return responses
-#
-    def get_body_response(self):
+    def get_body_response(self, url):
         for request in self._web_driver.requests:
-            if request.response:
-                body = decode(request.response.body, request.response.headers.get('Content-Encoding', 'identity'))
-                print(body
-                    # request.url,
-                    # # request.response.status_code,
-                    # # request.response.headers['Content-Type'],
-                    # request.response.body
-                )
+            if request.url == url:
+                body_b = decode(request.response.body, request.response.headers.get('Content-Encoding', 'identity'))
+                body_str = body_b.decode('UTF-8')
+                body_dict = json.loads(body_str)
+
+                return body_dict
+            else: f"Request with url {url} does not exist"
+

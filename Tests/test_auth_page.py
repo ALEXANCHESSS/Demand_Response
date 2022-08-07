@@ -14,13 +14,9 @@ class TestAuth(BaseTest):
 
     def test_login_error(self, web_browser):
         self.auth_page = AuthPage(web_browser)
-        self.auth_page.login(TestData.LOGIN, "1234567890")
-
-        self.auth_page.wait_page_loaded()
-        body = self.auth_page.get_body_response()
-
-        # with open(r"C:\Users\kuznetsov-an\PycharmProjects\Demand_Response\Reports\body_response.txt", "w") as file:
-        #     file.write(body)
+        # self.auth_page.login(TestData.LOGIN, "1234567890")
+        body = self.auth_page.get_body_response("https://api.github.com/repos/SergeyPirogov/webdriver_manager")
+        print(body["owner"]["login"])
 
 
 
